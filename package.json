@@ -1,0 +1,17 @@
+{
+  "name": "express-jit-coffee",
+  "description": "An express middleware to automatically compile and serve coffeescript files just in time."
+  "main": "express-jit-coffee.js",
+  "version": "0.0.1",
+  "author": "Jakob Mattsson <jakob.mattsson@gmail.com> (jakobmattsson.se)",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jakobmattsson/express-jit-coffee.git"
+  },
+  "engines": {
+    "node": "*"
+  },
+  "dependencies": {
+    "coffee-script": "*"
+  }
+}
