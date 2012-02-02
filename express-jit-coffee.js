@@ -1,5 +1,6 @@
 var fs = require('fs');
 var coffee = require('coffee-script');
+var less = require('less');
 
 module.exports = function(root, fail) {
 
@@ -14,9 +15,7 @@ module.exports = function(root, fail) {
   }
 
   return function(req, res, next) {
-    if (!req.url.match(/\.coffee$/)) {
-      next();
-    } else {
+    if (req.url.match(/\.coffee$/)) {
       fs.readFile(root + req.url, 'utf8', function(err, content) {
         if (err) {
           next();
@@ -28,9 +27,27 @@ module.exports = function(root, fail) {
             next();
             return;
           }
-          res.send(code);
+          res.send(code, { 'Content-Type': 'text/javascript' });
         }
       });
+    } else if (req.url.match(/\.less$/)) {
+      fs.readFile(root + req.url, 'utf8', function(err, content) {
+        if (err) {
+          next();
+        } else {
+          var code = less.render(content, function(err, css) {
+            console.log("got result", err, css);
+            if (err) {
+              fail(req, e);
+              next();
+            } else {
+              res.send(css, { 'Content-Type': 'text/css' });
+            }
+          });
+        }
+      });
+    } else {
+      next();
     }
   };
 };
