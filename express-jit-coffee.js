@@ -1,4 +1,5 @@
 var fs = require('fs');
+var path = require('path');
 var coffee = require('coffee-script');
 var less = require('less');
 
@@ -35,15 +36,19 @@ module.exports = function(root, fail) {
         if (err) {
           next();
         } else {
-          var code = less.render(content, function(err, css) {
-            console.log("got result", err, css);
-            if (err) {
-              fail(req, e);
-              next();
-            } else {
-              res.send(css, { 'Content-Type': 'text/css' });
-            }
-          });
+          try {
+            less.render(content, { paths: [path.dirname(root + req.url)] }, function(err, css) {
+              if (err) {
+                fail(req, err);
+                next();
+              } else {
+                res.send(css, { 'Content-Type': 'text/css' });
+              }
+            });
+          } catch (e) {
+            fail(req, e);
+            next();
+          }
         }
       });
     } else {
