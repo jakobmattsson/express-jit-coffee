@@ -15,7 +15,7 @@ module.exports = function(root, fail) {
     }
   }
 
-  var send = function(type, data) {
+  var send = function(res, type, data) {
     res.setHeader('Content-Type', type);
     res.setHeader('Content-Length', Buffer.byteLength(result));
     res.end(data);
@@ -34,7 +34,7 @@ module.exports = function(root, fail) {
             next();
             return;
           }
-          send('text/javascript', code);
+          send(res, 'text/javascript', code);
         }
       });
     } else if (req.url.match(/\.less$/)) {
@@ -48,7 +48,7 @@ module.exports = function(root, fail) {
                 fail(req, err);
                 next();
               } else {
-                send('text/css', css);
+                send(res, 'text/css', css);
               }
             });
           } catch (e) {
