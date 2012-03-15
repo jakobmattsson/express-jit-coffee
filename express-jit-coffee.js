@@ -15,6 +15,12 @@ module.exports = function(root, fail) {
     }
   }
 
+  var send = function(type, data) {
+    res.setHeader('Content-Type', type);
+    res.setHeader('Content-Length', Buffer.byteLength(result));
+    res.end(data);
+  };
+
   return function(req, res, next) {
     if (req.url.match(/\.coffee$/)) {
       fs.readFile(root + req.url, 'utf8', function(err, content) {
@@ -28,7 +34,7 @@ module.exports = function(root, fail) {
             next();
             return;
           }
-          res.send(code, { 'Content-Type': 'text/javascript' });
+          send('text/javascript', code);
         }
       });
     } else if (req.url.match(/\.less$/)) {
@@ -42,7 +48,7 @@ module.exports = function(root, fail) {
                 fail(req, err);
                 next();
               } else {
-                res.send(css, { 'Content-Type': 'text/css' });
+                send('text/css', css);
               }
             });
           } catch (e) {
