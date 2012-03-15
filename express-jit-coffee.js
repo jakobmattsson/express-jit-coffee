@@ -17,7 +17,7 @@ module.exports = function(root, fail) {
 
   var send = function(res, type, data) {
     res.setHeader('Content-Type', type);
-    res.setHeader('Content-Length', Buffer.byteLength(result));
+    res.setHeader('Content-Length', Buffer.byteLength(data));
     res.end(data);
   };
 
