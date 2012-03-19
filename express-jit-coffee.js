@@ -43,7 +43,7 @@ module.exports = function(root, fail) {
           next();
         } else {
           try {
-            less.render(content, { paths: [path.dirname(root + req.url)] }, function(err, css) {
+            less.render(content, { paths: [path.dirname(root + req.url), root] }, function(err, css) {
               if (err) {
                 fail(req, err);
                 next();
