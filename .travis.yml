@@ -1,0 +1,15 @@
+language: node_js
+node_js:
+- '0.10'
+- '0.12'
+sudo: false
+deploy:
+  provider: npm
+  email: jakob.mattsson@gmail.com
+  skip_cleanup: true
+  api_key:
+    secure: MfT8BmeKmsU4IS3gR8rc/78JDWlMQ7lYmxSIgSzF4P8rENGF/9k58E+HeE4LYbqe6IXBte9JLCLPp5vjWLAGgxTeOY9qRxQB+sxWidZ8aV0XL95TklSDVwzD0fgPwWkG82j50j8nrsdWQEP6lG2dCyuaylcB2n/n8ITLV+J3bG4=
+  on:
+    tags: true
+    branch: master
+    repo: jakobmattsson/express-jit-coffee
